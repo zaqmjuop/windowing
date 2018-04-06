@@ -11,7 +11,7 @@ var inputBox = function(){
     .attr("placeholder", "输入网址")
     .attr("type", "text")
     .addClass("form-control")
-    .attr("value", "")
+    .attr("value", "https://www.baidu.com")
     .attr("id", id)
   var holder = $("<div></div>")
     .addClass("input-group-append")
@@ -53,4 +53,5 @@ $(document).ready(function () {
   $("iframe").each(function () {
     this.height = window.outerHeight
   })
+
 })
