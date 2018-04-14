@@ -1,5 +1,4 @@
-'use strict';
-if(!document.querySelector) return false
+'use strict'
 import isUri from "is-url"
 
 window.i = 0 //计数器
@@ -12,9 +11,9 @@ const newPage = (option) => {
 }
 
 const replaceElement = (oldElement, newElement) => {
-  if(!(oldElement && newElement)) return false
+  if(!(oldElement && newElement)) {return false}
   let parent = oldElement.parentElement
-  if(!parent) return false
+  if(!parent) {return false}
   $(newElement).insertBefore($(oldElement))
 }
 
@@ -27,10 +26,10 @@ const supportIframeHeight = () => {
 
 window.resetIframeHeight = () => {
   $("iframe").each((index, element) => {
-    if (!element) return
+    if (!element) {return }
     let height = $(element).attr("height") || ''
     let perHeight = height.match(/\d+%$/)
-    if (!perHeight) return
+    if (!perHeight) {return }
     let per = parseInt(perHeight)
     height = $(element).parent().height() * per / 100
     $(element).css("height", height+"px")
@@ -38,7 +37,7 @@ window.resetIframeHeight = () => {
 }
 
 const formatURL = (val) => {
-  if ((!val) || (typeof val != "string") ) return false
+  if ((!val) || (typeof val != "string") ) {return false}
   let hasPrefix = val.match(/^http[s]?:[/]{2}/)
   if(!hasPrefix){
     val = "http://" + val
@@ -53,8 +52,8 @@ const validateURL = (val) => {
 }
 
 const sendFeedback = (element, validbool, feedback) => {
-  if ((!element) || (element.nodeType != 1)) return false
-  if ((!feedback) || (typeof feedback != "string")) return false
+  if ((!element) || (element.nodeType != 1)) {return false}
+  if ((!feedback) || (typeof feedback != "string")) {return false}
   let bool = Boolean(validbool)
   let inputClass = (bool) ? "is-valid" : "is-invalid"
   let feedbackClass = (bool) ? "valid-tooltip" : "invalid-tooltip"
@@ -75,9 +74,9 @@ const invalidFeedback = (element, feedback) => {
 }
 
 const entranceSumit = (entrance) => {
-  if (!(entrance && $(entrance).hasClass("entrance"))) return false
+  if (!(entrance && $(entrance).hasClass("entrance"))) {return false}
   let input = $(entrance).find("input[type=text]")[0]
-  if (!input) return false 
+  if (!input) {return false} 
   let val = $(input).val()
   if (!val) {
     invalidFeedback(input, "请输入网址或搜索关键词")
@@ -95,12 +94,10 @@ const entranceSumit = (entrance) => {
 }
 
 
-
-
 const bindEntranceInput = (entrance) => {
-  if (!(entrance && $(entrance).hasClass("entrance"))) return false
+  if (!(entrance && $(entrance).hasClass("entrance"))) {return false}
   let input = $(entrance).find("input[type=text]")[0]
-  if (!input) return
+  if (!input) {return }
   $(input).on("keypress", (event) => {
     if (event.keyCode == 13) {
       entrance.submit()
@@ -110,13 +107,13 @@ const bindEntranceInput = (entrance) => {
 
 
 const bindEntranceSubmit = (entrance) => {
-  if (!(entrance && $(entrance).hasClass("entrance"))) return false
+  if (!(entrance && $(entrance).hasClass("entrance"))) {return false}
   entrance.submit = () => {
     entranceSumit(entrance)
   }
 
   let button = $(entrance).find("button")[0]
-  if (!button) return
+  if (!button) {return }
   //提交按钮
   $(button).on("click", () => { entrance.submit() })
 }
@@ -125,7 +122,7 @@ const bindEntranceSubmit = (entrance) => {
 
 const bindEntrance = () => {
   $(".entrance").each((index, entrance)=>{
-    if(!entrance) return
+    if(!entrance) {return }
     window.i+=1
     $(entrance).attr("id", "entrance-"+window.i)
     bindEntranceSubmit(entrance)
@@ -134,9 +131,16 @@ const bindEntrance = () => {
 }
 
 
-
 $(document).ready(() => {
-  if (!document.querySelector) return false
+  if (!document.querySelector) {return false}
   supportIframeHeight()
   bindEntrance()
 })
+
+//todo 
+// 左右视窗比率调整
+// 移动端改为上下分屏
+// 输入框快捷方式
+// 前进后退 历史记录
+// 提供一个输入框随时修改网址
+// 把验证单独拿出来
