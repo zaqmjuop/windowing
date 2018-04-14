@@ -60,3 +60,7 @@ body{
 .col-xl-auto {
   padding: 0;
 }
+
+.stage{
+  overflow: hidden;
+}
