@@ -61,6 +61,24 @@ body{
   padding: 0;
 }
 
-.stage{
+.hide{
+  display: none;
+}
+
+.loading{
+  width: 1em;
+  margin: 0 auto;
+}
+
+.iframe-holder{
   overflow: hidden;
+  flex-grow: 1;
+  position: relative;
+}
+
+.absolute-center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
