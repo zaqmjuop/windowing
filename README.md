@@ -1,1 +1,1 @@
-[预览](https://zaqmjuop.github.io/windowing/build/output/)
+[预览](https://zaqmjuop.github.io/windowing-view/)
