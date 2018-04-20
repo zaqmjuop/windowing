@@ -1,7 +1,7 @@
 {
   "name": "DomScripting",
   "version": "1.0.0",
-  "description": "",
+  "description": "[预览](https://zaqmjuop.github.io/windowing-view/)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,17 @@
     "jquery": "^3.3.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0"
-  }
+    "babel-core": "^6.26.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaqmjuop/windowing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zaqmjuop/windowing/issues"
+  },
+  "homepage": "https://github.com/zaqmjuop/windowing#readme"
 }
