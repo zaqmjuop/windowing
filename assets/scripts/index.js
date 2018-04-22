@@ -102,7 +102,9 @@ const bindEntranceInput = (entrance) => {
   if (!input) return false;
   $(input).on('keypress', (event) => {
     if (isEnterKey(event)) {
-      entrance.submit();
+      const submit = $(entrance).find('button[name=submit]');
+      if (!submit) return;
+      submit.click();
     }
   });
   return entrance;
@@ -110,15 +112,9 @@ const bindEntranceInput = (entrance) => {
 
 const bindEntranceSubmit = (entrance) => {
   if (!(entrance && $(entrance).hasClass('entrance'))) return false;
-  const entranceDup = entrance;
-  entranceDup.submit = () => {
-    entranceSumit(entranceDup);
-  };
-
-  const button = $(entrance).find('button')[0];
-  if (!button) return false;
-  // 提交按钮
-  $(button).on('click', () => { entrance.submit(); });
+  const submit = $(entrance).find('button[name=submit]')[0];
+  if (!submit) return false; // 提交按钮
+  $(submit).on('click', () => { entranceSumit(entrance); });
   return entrance;
 };
 

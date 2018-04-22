@@ -1,21 +1,26 @@
 {
-  "name": "DomScripting",
+  "name": "windowing",
   "version": "1.0.0",
   "description": "[预览](https://zaqmjuop.github.io/windowing-view/)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "output": "parcel build index.html -d ../output",
+    "buildjs": "parcel build assets/scripts/index.js -d ../output",
+    "buildcss": "parcel build assets/styles/index.css -d ../output",
+    "buildhtml": "parcel build index.html --public-url ../output"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-preset-env": "^1.6.1",
     "is-url": "^1.2.4",
     "jquery": "^3.3.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0"
