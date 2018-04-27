@@ -2,6 +2,27 @@
 
 import isUri from 'is-url';
 
+const getMouseButton = (event) => {
+  if (!event || (event instanceof MouseEvent)) return false;
+  const isIE = (navigator.appName === 'Microsoft Internet Explorer');
+  let button = 'right';
+  switch (event.button) {
+    case 0:
+      button = 'left';
+      break;
+    case 1:
+      button = (isIE) ? 'left' : 'middle';
+      break;
+    case 4:
+      button = 'middle';
+      break;
+    default:
+      button = 'right';
+      break;
+  }
+  return button;
+};
+
 const isAliveElement = element => (element && element.nodeType === 1 && $(element).parent('html'));
 
 const isEnterKey = event => (event.keyCode === 13);
@@ -44,7 +65,6 @@ const newPage = (option) => {
   $(page).on('load', () => {
     initIframe(page);
   });
-
   const holder = $('<div>').addClass('iframe-holder');
 
   holder.append(loading).append(page);
@@ -66,24 +86,6 @@ const validateURL = (val) => {
   return (isUri(val) ? val : undefined);
 };
 
-// const sendFeedback = (input, isValid, feedback) => {
-//   if (!isAliveElement(input)) return false;
-//   if ((!feedback) || (typeof feedback !== 'string')) return false;
-//   const inputClass = (isValid) ? 'is-valid' : 'is-invalid';
-//   const feedbackClass = (isValid) ? 'valid-tooltip' : 'invalid-tooltip';
-//   let place = $(input).next('.feedback')[0];
-//   if (!place) {
-//     place = $('<div>').addClass('feedback').insertAfter(input);
-//   }
-//   $(input).removeClass('is-valid is-invalid').addClass(inputClass);
-//   $(place).text(feedback).removeClass('valid-tooltip invalid-tooltip').addClass(feedbackClass);
-//   return feedback;
-// };
-
-// const validFeedback = (input, feedback) => (sendFeedback(input, true, feedback));
-
-// const invalidFeedback = (input, feedback) => (sendFeedback(input, false, feedback));
-
 const entranceSumit = (entrance) => {
   if (!entrance) return false;
   if (!$(entrance).hasClass('entrance')) return false;
@@ -92,7 +94,7 @@ const entranceSumit = (entrance) => {
   const val = $(input).val();
   const url = validateURL(formatURL(val)) || `https://www.baidu.com/s?ie=UTF-8&wd=${val}`;
   const page = newPage({ url });
-  $(entrance).html(page);
+  $(entrance).html('').css({ padding: '0px' }).append(page);
   return entrance;
 };
 
@@ -136,12 +138,64 @@ const supportIframeHeight = () => {
   };
 };
 
+const dragCardHeader = (card) => {
+  if (!card) return false;
+  const cardHeaderDrager = $(card).find('.header-drager')[0];
+  const cardHeader = $(card).find('.card-header')[0];
+  const cardBody = $(card).find('.card-body')[0];
+  if (!cardHeaderDrager || !cardHeader || !cardBody) return false;
+  const top = cardHeader.offsetTop;
+  return (event) => {
+    let height = event.clientY - top;
+    if (height < 50) {
+      height = 0;
+      $(cardHeader).css({ display: 'none' });
+    } else {
+      $(cardHeader).css({ display: '' });
+    }
+    $('body').css({ cursor: 'n-resize' });
+    $(cardHeader).css({ height: `${height}px` });
+    return card;
+  };
+};
+
+const bindCardHeaderDrager = () => {
+  const cards = $('.card');
+  const curtain = $('<div>').addClass('curtain');
+  if (!cards) return false;
+  $(cards).each((index, card) => {
+    const cardHeaderDrager = $(card).find('.header-drager')[0];
+    if (!cardHeaderDrager) return;
+    const dragHandler = dragCardHeader(card);
+    $(cardHeaderDrager).on('mousedown', (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+      if (getMouseButton(event) === 'left') {
+        $(document).on('mousemove', dragHandler);
+      }
+      $(curtain).insertBefore('#app');
+    });
+    $(document).on('mouseup', () => {
+      $('.curtain').remove();
+      $('body').css({ cursor: 'default' });
+      $(document).off('mousemove', dragHandler);
+    });
+  });
+  return cards;
+};
+
+const bindDrager = () => {
+  bindCardHeaderDrager();
+};
+
 $(document).ready(() => {
   if (!document.querySelector) return false;
   supportIframeHeight();
   bindEntrance();
+  bindDrager();
   return true;
 });
+
 
 // todo
 // 左右视窗比率调整
@@ -149,7 +203,6 @@ $(document).ready(() => {
 // 输入框快捷方式
 // 前进后退 历史记录
 // 提供一个输入框随时修改网址
-// 把验证单独拿出来
 // 加载iframe
 // 先放一个加载中icon√。 body添加一个iframe display=none onload='show' settimeout每秒检查一次状态 超过10秒不行就提示失败
 // 因为同源问题 不能删除iframe内的a标签的target

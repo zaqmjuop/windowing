@@ -82,3 +82,22 @@ body{
   left: 50%;
   transform: translate(-50%,-50%);
 }
+
+.card-body{
+  position: relative;
+}
+.header-drager{
+  cursor: n-resize;
+  height: 3px;
+  top: 0;
+  width: 100%;
+  transform: translateY(-1px);
+}
+.curtain{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 99999;
+  background-color: #eee;
+  opacity: 0.1;
+}
