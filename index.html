@@ -23,18 +23,24 @@
 <body>
   <!-- main start -->
   <div class="container-fluid" id="app">
+    <datalist id="urls"></datalist>
     <div class="row" style="height:100%;">
 
       <div class="col">
-        <div class="card ">
+        <div class="card embedded-control">
           <div class="card-header">
-            Featured
+            <div class="input-group">
+              <input list="urls"type="text" placeholder="输入网址或百度搜索关键词" class="form-control" value="">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" name="submit">Biu</button>
+              </div>
+            </div>
           </div>
           <span class="header-drager"></span>
           <!-- 在js中替换 .entrance 的内容 -->
           <div class="card-body entrance ">            
             <div class="input-group">
-              <input type="text" placeholder="输入网址或百度搜索关键词" class="form-control" value="">
+              <input list="urls" type="text" placeholder="输入网址或百度搜索关键词" class="form-control" value="">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" name="submit">Biu</button>
               </div>
@@ -44,22 +50,24 @@
       </div>
 
       <div class="col">
-        <div class="card ">
-          <!-- 在js中替换 .entrance 的内容 -->
-          <div class="card-body entrance ">
-            <!-- <div class="iframe-holder" style="background-color:black;"></div> -->
-
-
-
-            <!-- <i class="fa fa-spinner fa-pulse loading fa-2x"></i> -->
+        <div class="card embedded-control">
+          <div class="card-header">
             <div class="input-group">
-              <input type="text" placeholder="输入网址或百度搜索关键词" class="form-control" value="">
+              <input list="urls"type="text" placeholder="输入网址或百度搜索关键词" class="form-control" value="">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" name="submit">Biu</button>
               </div>
             </div>
-            <!-- <iframe src="https://baidu.com/" onerror="onreadystatechange('qwwe')" class="page" onload="resetIframeHeight()" frameborder="0"></iframe> -->
-
+          </div>
+          <span class="header-drager"></span>
+          <!-- 在js中替换 .entrance 的内容 -->
+          <div class="card-body entrance ">
+            <div class="input-group">
+              <input list="urls"type="text" placeholder="输入网址或百度搜索关键词" class="form-control" value="">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" name="submit">Biu</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
