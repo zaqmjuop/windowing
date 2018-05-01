@@ -88,10 +88,22 @@ body{
 }
 .header-drager{
   cursor: n-resize;
-  height: 3px;
+  height: 2px;
   top: 0;
   width: 100%;
   transform: translateY(-1px);
+  background-color: #999;
+  z-index: 999;
+}
+.left-drager{
+  position: absolute;
+  cursor: e-resize;
+  height: 100%;
+  left: 0;
+  width: 2px;
+  transform: translateX(-1px);
+  z-index: 999;
+  background-color: #999;
 }
 .curtain{
   position: fixed;

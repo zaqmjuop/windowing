@@ -69,9 +69,64 @@ const bindCardHeaderDrager = () => {
   return cards;
 };
 
+const dragCardLeft = (card) => {
+  if (!card) return false;
+  const cardLeftDrager = $(card).find('.left-drager')[0];
+  const cardHeader = $(card).find('.card-header')[0];
+  const cardBody = $(card).find('.card-body')[0];
+  const col = $(card).parents('.col')[0];
+  const container = $(col).parent()[0];
+  const brothers = $(container).children();
+  if (!cardLeftDrager || !cardHeader || !cardBody || !col || !container) return false;
+  return (event) => {
+    let totalGrow = 0;
+    brothers.each((index, item) => {
+      totalGrow += Number($(item).css('flex-grow'));
+    });
+    const left = col.offsetLeft;
+    const width = col.clientWidth;
+    const total = container.offsetWidth;
+    const per = width / total;
+    const grow = $(col).css('flex-grow');
+    const x = event.clientX - container.offsetLeft;
+    const goalWidth = (left + width) - x;
+    const goalPer = goalWidth / total;
+    const goalGrow = (goalPer / per) * grow;
+    $(col).css('flex-grow', goalGrow);
+    $('body').css({ cursor: 'e-resize' });
+    return card;
+  };
+};
+
+const bindCardLeftDrager = () => {
+  const cards = $('.card');
+  if (!cards) return false;
+  const curtain = $('<div>').addClass('curtain');
+  $(cards).each((index, card) => {
+    const cardLeftDrager = $(card).find('.left-drager')[0];
+    if (!cardLeftDrager) return;
+    const dragHandler = dragCardLeft(card);
+    $(cardLeftDrager).on('mousedown', (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+      if (getMouseButton(event) === 'left') {
+        $(document).on('mousemove', dragHandler);
+      }
+      $(curtain).insertBefore('#app');
+    });
+    $(document).on('mouseup', () => {
+      $('body').css({ cursor: 'default' });
+      $(document).off('mousemove', dragHandler);
+      resetIframeHeight();
+      $('.curtain').remove();
+    });
+  });
+  return cards;
+};
 
 const bindDrager = () => {
   bindCardHeaderDrager();
+  bindCardLeftDrager();
 };
 
 export default bindDrager;
