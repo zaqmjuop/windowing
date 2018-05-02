@@ -28,9 +28,16 @@ const dragCardHeader = (card) => {
   const cardBody = $(card).find('.card-body')[0];
   if (!cardHeaderDrager || !cardHeader || !cardBody) return false;
   const top = cardHeader.offsetTop;
+  let cardHeaderMinHeight = 25;
+  const cardHeaderLastChild = cardHeader.lastElementChild;
+  if (cardHeaderLastChild) {
+    const cardHeaderLastChildHeight = cardHeaderLastChild.offsetHeight;
+    const cardHeaderLastChildTop = cardHeaderLastChild.offsetTop;
+    cardHeaderMinHeight = cardHeaderLastChildHeight + cardHeaderLastChildTop;
+  }
   return (event) => {
     let height = event.clientY - top;
-    if (height < 50) {
+    if (height < cardHeaderMinHeight) {
       height = 0;
       $(cardHeader).css({ display: 'none' });
     } else {
