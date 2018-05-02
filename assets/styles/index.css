@@ -83,6 +83,7 @@ body{
 
 .card-body{
   position: relative;
+  padding: 0;
 }
 .header-drager{
   cursor: n-resize;
