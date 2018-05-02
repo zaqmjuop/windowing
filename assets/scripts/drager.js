@@ -83,13 +83,8 @@ const dragCardLeft = (card) => {
   const cardBody = $(card).find('.card-body')[0];
   const col = $(card).parents('.col')[0];
   const container = $(col).parent()[0];
-  const brothers = $(container).children();
   if (!cardLeftDrager || !cardHeader || !cardBody || !col || !container) return false;
   return (event) => {
-    let totalGrow = 0;
-    brothers.each((index, item) => {
-      totalGrow += Number($(item).css('flex-grow'));
-    });
     const left = col.offsetLeft;
     const width = col.clientWidth;
     const total = container.offsetWidth;

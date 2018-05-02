@@ -29,9 +29,7 @@ body{
   justify-content: center;
 }
 
-.none{
-  display: none;
-}
+
 
 
 .drager{
@@ -61,7 +59,7 @@ body{
   padding: 0;
 }
 
-.hide{
+.hide, .none{
   display: none;
 }
 
@@ -115,4 +113,7 @@ body{
 }
 .form-control:focus{
   background-color: #FFFFCC;
+}
+.full-height{
+  height: 100%;
 }
