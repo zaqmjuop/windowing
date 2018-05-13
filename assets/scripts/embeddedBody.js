@@ -1,4 +1,4 @@
-import { visiteds } from './store';
+import visiteds from './visiteds';
 import { isEnterKey, validateURL, formatURL } from './tool';
 import { resetIframeHeight } from './supportIframeHeight';
 
@@ -49,8 +49,8 @@ const embeddedSubmit = (submit) => {
   const input = $(inputGroup).find('input[type=text]')[0];
   if (!input) throw new Error('submit应该有一个<input type=text>的相邻元素');
   const val = $(input).val();
-  visiteds.saveVisited(val);
   const url = validateURL(formatURL(val)) || `https://www.baidu.com/s?ie=UTF-8&wd=${val}`;
+  visiteds.saveVisited(url);
   // ↓检查元素结构
   const embeddedBody = $(submit).parents('.card-body')[0];
   if (!embeddedBody) throw new Error('submit应该有class="card-body"的父元素');
@@ -111,18 +111,17 @@ const bindEmbeddedInput = (input) => {
     if (isEnterKey(event)) { submit.click(); }
   });
   $(input).on('focus', () => {
-    const request = visiteds.getAll();
-    $(request).on('success', () => {
-      const urls = request.result;
-      if (!urls || !(urls instanceof Array)) return false;
-      const datalist = $('#urls');
-      datalist.html('');
-      urls.forEach((item) => {
-        const option = $('<option>').attr('value', item.url);
-        datalist.append(option);
+    const promise = visiteds.getAll()
+      .then((items) => {
+        const datalist = $('#urls');
+        datalist.html('');
+        items.forEach((item) => {
+          const option = $('<option>').attr('value', item.url);
+          datalist.append(option);
+        });
+        return items;
       });
-      return urls;
-    });
+    return promise;
   });
 };
 

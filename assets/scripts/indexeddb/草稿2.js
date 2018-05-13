@@ -1,3 +1,4 @@
+
 const indexedDB = window.indexedDB ||
   window.mozIndexedDB ||
   window.webkitIndexedDB ||
@@ -125,7 +126,7 @@ class Store {
   }
 }
 
-const visiteds = new Store({ url: true });
+const visiteds = new Store({ url: true, name: false });
 visiteds.saveVisited = (url) => {
   if (!url || (typeof url !== 'string')) return false;
   return visiteds.add({ url });
