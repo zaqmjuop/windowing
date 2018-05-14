@@ -6,7 +6,7 @@
 
 ### 什么时候我需要它
 有一天，我想看试试jQuery的一个api，可是，我又先左右切换页面很麻烦，于是
-![预览](./assets/images/preview.png)
+![预览](./assets/images/readme.gif)
 
 [链接](https://zaqmjuop.github.io/windowing-view/)
 
