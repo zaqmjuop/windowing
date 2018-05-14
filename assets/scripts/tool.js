@@ -12,7 +12,7 @@ const validateURL = (url) => {
 const formatURL = (url) => {
   if ((!url) || (typeof url !== 'string')) return false;
   const hasPrefix = url.match(/^http[s]?:[/]{2}/);
-  const format = (hasPrefix) ? url : (`http://${url}`);
+  const format = (hasPrefix) ? url : (`https://${url}`);
   return format;
 };
 
