@@ -1,3 +1,5 @@
+import { embeddedSubmit, bindEmbeddedInput } from './embeddedBody';
+
 const bindRefreshButton = (embedded) => {
   if (!embedded || !$(embedded).hasClass('embedded-control')) throw new Error('参数元素应该是有标记class="embedded-control"');
   const embeddedBody = $(embedded).find('.card-body')[0];
@@ -46,12 +48,30 @@ const bindHomePageButton = (embedded) => {
   return embedded;
 };
 
+const bindEmbeddedHeaderSubmit = (embedded) => {
+  if (!embedded || !$(embedded).hasClass('embedded-control')) throw new TypeError('参数元素应该有class="embedded-control"标记');
+  const header = $(embedded).find('.card-header')[0];
+  if (!header) throw new TypeError('参数元素应包含header');
+  const inputGroup = $(embedded).find('.input-group')[0];
+  if (!header) throw new TypeError('参数元素应包含输入组');
+  const input = $(inputGroup).find('input[list=urls]')[0];
+  if (!input) throw new TypeError('参数元素应包含地址输入框');
+  const submit = $(inputGroup).find('button[name=submit]')[0];
+  if (!submit) throw new TypeError('参数元素应包含提交按钮');
+  $(submit).on('click', () => {
+    embeddedSubmit(submit);
+  });
+  bindEmbeddedInput(input);
+  return embedded;
+};
+
 const initEmbeddedHeader = (embedded) => {
   if (!embedded || !$(embedded).hasClass('embedded-control')) throw new Error('initEmbeddedHeader的参数元素应该是有标记class="embedded-control"');
   const embeddedHeader = $(embedded).find('card-header');
   if (!embeddedHeader) throw new Error('<div class="embedded-control">需要一个存在子元素<div class="card-header">');
   bindHomePageButton(embedded);
   bindRefreshButton(embedded);
+  bindEmbeddedHeaderSubmit(embedded);
   return true;
 };
 

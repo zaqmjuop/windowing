@@ -1,4 +1,4 @@
-import visiteds from './visiteds';
+import visiteds from './indexeddb/visiteds';
 import { isEnterKey, validateURL, formatURL } from './tool';
 import { resetIframeHeight } from './supportIframeHeight';
 
@@ -52,7 +52,9 @@ const embeddedSubmit = (submit) => {
   const url = validateURL(formatURL(val)) || `https://www.baidu.com/s?ie=UTF-8&wd=${val}`;
   visiteds.saveVisited(url);
   // ↓检查元素结构
-  const embeddedBody = $(submit).parents('.card-body')[0];
+  const embedded = $(submit).parents('.embedded-control')[0];
+  if (!embedded) throw new TypeError('缺少带class="embedded-control"标记的父元素');
+  const embeddedBody = $(embedded).find('.card-body')[0];
   if (!embeddedBody) throw new Error('submit应该有class="card-body"的父元素');
   const homepage = $(embeddedBody).find('div[name=homepage]')[0];
   if (!homepage) throw new Error('embedded 应该包含 <div name="homepage">的元素');
@@ -153,3 +155,4 @@ const initEmbeddedBody = (embedded) => {
 };
 
 export default initEmbeddedBody;
+export { embeddedSubmit, bindEmbeddedInput };

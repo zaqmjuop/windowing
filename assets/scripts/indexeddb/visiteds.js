@@ -1,4 +1,4 @@
-import Store from './indexeddb/store';
+import Store from './store';
 
 const visiteds = new Store('Visiteds');
 
